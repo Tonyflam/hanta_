@@ -104,11 +104,53 @@
     color: #f5d76e;
     transform: translateY(-1px);
   }
-  .links a.disabled {
-    opacity: 0.4;
-    pointer-events: none;
-    cursor: not-allowed;
+  .links a.primary {
+    background: #f5d76e;
+    color: #0a0a0a;
+    border-color: #f5d76e;
+    font-weight: 600;
   }
+  .links a.primary:hover {
+    background: #ffe488;
+    color: #0a0a0a;
+    border-color: #ffe488;
+  }
+  .ca {
+    border: 1px dashed #2a2a2a;
+    background: rgba(20,18,15,0.6);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.15s;
+    word-break: break-all;
+    line-height: 1.5;
+  }
+  .ca:hover { border-color: #f5d76e; }
+  .ca-label {
+    color: #6b6b6b;
+    margin-right: 8px;
+    font-weight: 600;
+  }
+  .ca-value { color: #e8e6df; font-family: inherit; }
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f5d76e;
+    color: #0a0a0a;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .toast.show { opacity: 1; }
   .footer {
     font-size: 12px;
     color: #4a4a4a;
@@ -126,28 +168,36 @@
 <body>
   <div class="wrap">
     <h1>hanta.</h1>
-    <div class="tag">bsc strain. day 1,848 of living rent-free.</div>
+    <div class="tag">bsc strain. the landlord has arrived.</div>
 
     <div class="when">
-      <span class="blink">●</span> monday · 14:00 utc
+      <span class="blink">●</span> live · pay rent
+    </div>
+
+    <div class="ca" id="ca" title="click to copy">
+      <span class="ca-label">CA</span>
+      <span class="ca-value">0x33596bf100d1fecdaf66874364ba59047aafffff</span>
     </div>
 
     <div class="spec">
       <div class="row"><span class="k">chain</span><span class="v">bsc</span></div>
       <div class="row"><span class="k">platform</span><span class="v">four.meme</span></div>
+      <div class="row"><span class="k">ticker</span><span class="v">$HANTA</span></div>
       <div class="row"><span class="k">supply</span><span class="v">1,000,000,000</span></div>
       <div class="row"><span class="k">tax (curve)</span><span class="v">0%</span></div>
       <div class="row"><span class="k">tax (post-grad)</span><span class="v">3% · 70/30</span></div>
-      <div class="row"><span class="k">lp</span><span class="v">burned</span></div>
+      <div class="row"><span class="k">lp</span><span class="v">burns at grad</span></div>
       <div class="row"><span class="k">team alloc</span><span class="v">none</span></div>
       <div class="row"><span class="k">presale</span><span class="v">none</span></div>
+      <div class="row"><span class="k">antisniper</span><span class="v">enabled</span></div>
     </div>
 
     <div class="links">
+      <a class="primary" href="https://four.meme/en/token/0x33596bf100d1fecdaf66874364ba59047aafffff" target="_blank" rel="noopener">buy on four.meme</a>
+      <a href="https://dexscreener.com/bsc/0x33596bf100d1fecdaf66874364ba59047aafffff" target="_blank" rel="noopener">chart</a>
+      <a href="https://bscscan.com/token/0x33596bf100d1fecdaf66874364ba59047aafffff" target="_blank" rel="noopener">bscscan</a>
       <a href="https://x.com/hantabnb" target="_blank" rel="noopener">x</a>
       <a href="https://t.me/hantabsc" target="_blank" rel="noopener">telegram</a>
-      <a href="https://four.meme" target="_blank" rel="noopener">four.meme</a>
-      <a class="disabled" href="#">chart · monday</a>
     </div>
 
     <div class="footer">
@@ -155,5 +205,20 @@
       <div>pay rent.</div>
     </div>
   </div>
+
+  <div class="toast" id="toast">copied. 🐀</div>
+
+  <script>
+    const ca = document.getElementById('ca');
+    const toast = document.getElementById('toast');
+    const addr = '0x33596bf100d1fecdaf66874364ba59047aafffff';
+    ca.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(addr);
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 1400);
+      } catch (e) {}
+    });
+  </script>
 </body>
 </html>
